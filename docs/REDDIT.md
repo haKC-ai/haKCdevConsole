@@ -1,29 +1,76 @@
-# Surface Duo as a wired Ubuntu display for a uConsole, with touch and the built-in trackball
+                    ██████████                                      ·✦·
+                    █▓       ░██                                           ✧
+                    █▒        ██ T H E   P I N A C L E  O F  H A K C I N G   Q U A L I T Y
+        █████████████░        █████████████████ ████████████ ████████████      ████████████
+       ██         ███░        ███▓▒▒▒▒▒▒▒▒▒▒▒██ █▒▒▒▒▒▒▒▒▓████        █████████▓          ▒█
+       ██  ✧      ███         ███▒▒▒▒▒▒▒▒▒▒▒▒▓██████████████▓        ███▓▒      ▒▓░       ▒█
+       ██         ███        ░██▓▒▒▒▒▒▒▒▒▒▒▒▒▒▓██▓▒▒▒▒▒▒▒▒█▓        ███░       ░██░       ▒█
+       ██         ███        ▒██▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒██▓▒▒▒▒▒▒▒▓▒        ██  ▓        ██░  ◆   ▓█
+       ██         ██▓        ███▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▓▒▒▒▒▒▒▒▓▒       ██   █        ██░       ▓
+       ██         ██▒        ██▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▒▒▒▒▒▒▒▓▒      ██    █        ▓█████████
+       ██     ★              ██▒▒▒▒▒▒▒▒█▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▒   ▒███████ █░       ░▓        █
+       ██         ░░         ██▒▒▒▒▒▒▒▒██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓█ ▓        ░█ ▓       ░▒       ░█
+       ██         ██░       ░█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓█ █░        ▒ █                ░█
+       ██   ·     ██        ▓█▒▒▒▒▒▒▒▒▒██▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓█ █░        ▒ █░               ▒█
+        ██████████  ███████████▓██▓▓█▓█  █▓▒▒▒▒▒▒▒▒▒▓██▓██   █▓▓▓▓▓▓▓█    █▓▓▓▓▓▓/\▓▓▓▓▓▓██ 
+      .:/____________________ █▓██▓██ ________ ████▓█▓████ _ ________________.  /  \.______\:.
+         _ __ _______________  ██▓██ __________ █▓▓▓██ ██ __________________. \/ /\.____ ___
+                                 █▓█             ██▓██                       \  /
+                                  ██               ███                        \/
+    
+    NAME............................................haKCdevConsole
+    Collective.............................................haKC.ai
+    Host.............................uConsole CM4 / Ubuntu 26.04.1
+    Display............................Surface Duo / DUO-DE Treble
+    Link....................................USB tether > RDP :3390
+    Size.......................................2 SCREENS / 1 CABLE
+    Dock..........................................DUO_DOCK_V10.3mf
+    Supplied by......................................../dev/CØR.23
+    Release date..............................................1994
+    
+    GROUP NEWS: Dual screens on a uConsole. No HDMI. No dongles.
+                No cloud. One USB cable and a Duo from the drawer.
+    
+    NFO:  Duo bolts on top, RDPs back over USB tether, and GNOME
+          treats it as a real second monitor. Touch included.
+    
+    GR33TZ: SecKC, LEGACY CoWTownComputerCongress, ClockworkPi
+            crew, DUO-DE, ACiD, iCE, badge lords
+    
+    SHOUTZ:
+            [*] everyone with a Duo in a drawer "just in case"
+            [*] l33t soulz still runnin' 720p on a 5" panel.
+                help has arrived.
+    
+            FU to [LAMERZ] mirroring their screen instead of
+            extending it.
+    
+               ───── ▓ signed, /dev/CØR.23 ▓ ─────
+                    "two screens > one. come fight us."
 
-I mounted a Surface Duo above a ClockworkPi uConsole and used it as a wired desktop display. The uConsole still runs the applications and handles its physical keyboard and trackball. The Duo runs Microsoft's Windows App as an RDP client and supplies touch input.
+720p on a uConsole is cozy until you need a terminal and docs open at the same time. So I bolted a Surface Duo to the top of it.
 
-The connection is USB tethering, not HDMI or USB video. Android exposes a USB network adapter, Linux picks it up with rndis_host, and RDP runs directly across that local link. I verified an established connection between the two USB addresses on port 3390. The desktop path doesn't involve my home server, a browser, or Tailscale. I haven't completed a deliberate test with every wireless interface disabled, so I'm keeping that distinction in the validation notes.
+**How it works.** No HDMI and no USB video. The Duo turns on USB tethering, the uConsole sees it as a network card (`rndis_host`), and Windows App on the Duo RDPs straight across the cable. No cloud, no relay, no Tailscale. Just two USB addresses talking on 3390.
 
-The useful GNOME setting is:
+The trick is one line:
 
-```sh
-gsettings set org.gnome.desktop.remote-desktop.rdp screen-share-mode extend
-```
+    gsettings set org.gnome.desktop.remote-desktop.rdp screen-share-mode extend
 
-Instead of mirroring the uConsole's 1280x720 panel, GNOME creates a virtual monitor using the dimensions requested by the Android client. Mine negotiated 1800x2700 with 2x scaling. It is part of the existing Wayland desktop session, so the uConsole keyboard and trackball still control it. It isn't a separate remote-login session.
+Instead of mirroring, GNOME spawns a virtual monitor sized to the Duo (1800x2700 @ 2x) inside the same Wayland session. It's a real second monitor, not a remote login. The keyboard and trackball drive it, and you get touch on the Duo for free.
 
-The Duo's two panels appear to Ubuntu as one tall monitor. I actually like that: an app can use the whole thing. For apps I want on just one panel, I added optional Ubuntu Tiling Assistant shortcuts: Ctrl+Alt+1 for the top half, Ctrl+Alt+2 for the bottom half, and Ctrl+Alt+0 to maximize across both. Those are work-area halves; they don't model the hinge, and exact hinge clearance still needs testing.
+**What else is in the repo**
 
-Two details mattered:
+- Both panels act as one tall screen. Ctrl+Alt+1 sends a window to the top half, Ctrl+Alt+2 to the bottom, Ctrl+Alt+0 to both.
+- A D-Bus watcher moves the top bar over when the Duo connects, and the dock runs on both screens.
+- The trackball cursor was invisible on the Duo. GNOME magnifier at 1.0x fixes it. Don't ask, it works.
+- RDP is locked to loopback plus the enrolled USB interface, and auth stays on. (USB IDs aren't crypto. The password still matters.)
 
-- GNOME initially left the top bar on the built-in display. A small D-Bus watcher makes the virtual monitor primary when it appears, and Ubuntu Dock's multi-monitor setting exposes the dock on both outputs.
-- The physical trackball moved and clicked correctly, but its cursor was invisible remotely. Enabling GNOME's magnifier at 1.0x made the physical cursor visible without zooming the desktop. That's a working workaround on this setup, not a claim that I've fixed GNOME's cursor handling.
+**The dock.** DUO_DOCK_V10.3mf bolts onto the uConsole screen area with 4x M4x8 countersunk screws. The bottom half of the Duo slides in and clicks into place, and the top half opens like a laptop. It prints flat with no supports. Mine is PETG on an AD5M.
 
-I kept RDP authentication and restricted port 3390 to loopback plus the enrolled USB interface. A NetworkManager dispatcher tracks the USB adapter using its vendor/product/serial/driver. Those identifiers aren't cryptographic authentication; the RDP password and certificate still matter.
+**Tested on:** uConsole CM4, Ubuntu 26.04.1 ARM64, GNOME 50.1, GNOME Remote Desktop 50.2, Tiling Assistant 54, Duo 1 on a DUO-DE Treble build.
 
-Hardware/software tested: uConsole CM4, Ubuntu 26.04.1 ARM64, GNOME Wayland, GNOME Shell 50.1, GNOME Remote Desktop 50.2, Ubuntu Tiling Assistant 54, Surface Duo with a DUO-DE Treble Android build, and Windows App. The physical uConsole panel remains about 60 Hz. The virtual monitor reporting 60 Hz doesn't prove the stream delivers 60 FPS, and I haven't benchmarked latency or battery life.
+**Not tested yet:** an air-gapped run with every radio off, real FPS (60 Hz reported isn't 60 FPS delivered), latency, battery, long-session reconnects, hinge-aware window placement.
 
-Setup, configs, limitations, and the DUO_DOCK_V10.3mf model are here:
+It's a prototype with real docs, not a flash-and-go image. Clone it, break it, send PRs.
+
 https://github.com/haKC-ai/haKCdevConsole
-
-This is a working prototype with a documented setup, not a universal image. Reconnect/orientation endurance and exact hinge-aware placement are still on the test list.
