@@ -1,0 +1,22 @@
+#!/usr/bin/python3
+"""Root-owned NetworkManager dispatcher: update only the RDP USB allowlist."""
+import json
+import pathlib
+import subprocess
+
+config = pathlib.Path('/etc/hakcdevconsole/usb-device.json')
+expected = json.loads(config.read_text()) if config.exists() else {}
+required = ('ID_VENDOR_ID', 'ID_MODEL_ID', 'ID_SERIAL_SHORT', 'ID_NET_DRIVER')
+interfaces = []
+if all(expected.get(key) for key in required):
+    for path in pathlib.Path('/sys/class/net').iterdir():
+        result = subprocess.run(['/usr/bin/udevadm', 'info', '-q', 'property', str(path)], capture_output=True, text=True)
+        props = dict(line.split('=', 1) for line in result.stdout.splitlines() if '=' in line)
+        if all(props.get(key) == expected[key] for key in required):
+            interfaces.append(path.name)
+commands = 'flush set inet uconsole_remote usb_interfaces\n'
+for interface in interfaces:
+    if not all(char.isalnum() or char in '_-.' for char in interface):
+        raise ValueError('Invalid interface name')
+    commands += 'add element inet uconsole_remote usb_interfaces { "' + interface + '" }\n'
+subprocess.run(['/usr/sbin/nft', '-f', '-'], input=commands, text=True, check=True)

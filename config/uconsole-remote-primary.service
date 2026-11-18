@@ -1,0 +1,8 @@
+[Unit]
+Description=Use the connected remote display as the primary GNOME monitor
+[Service]
+ExecStart=/usr/bin/python3 %h/.local/share/hakcdevconsole/primary-remote.py --watch
+Restart=on-failure
+RestartSec=3
+[Install]
+WantedBy=default.target

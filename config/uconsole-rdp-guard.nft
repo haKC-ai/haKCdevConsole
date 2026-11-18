@@ -1,0 +1,8 @@
+table inet uconsole_remote {
+ set usb_interfaces { type ifname; }
+ chain input {
+  type filter hook input priority -10; policy accept;
+  iifname @usb_interfaces tcp dport 3390 accept
+  iifname != "lo" tcp dport 3390 reject
+ }
+}

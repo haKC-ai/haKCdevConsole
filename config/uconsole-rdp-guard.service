@@ -1,0 +1,10 @@
+[Unit]
+Description=Restrict uConsole RDP to loopback and enrolled USB interfaces
+Before=display-manager.service
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/nft -f /etc/uconsole-rdp-guard.nft
+ExecStartPost=/etc/NetworkManager/dispatcher.d/90-uconsole-usb-rdp
+RemainAfterExit=yes
+[Install]
+WantedBy=multi-user.target
