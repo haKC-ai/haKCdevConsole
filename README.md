@@ -14,7 +14,6 @@ This is a documented working prototype, not a universal device image or a one-cl
 - [How the monitor and input work](docs/ARCHITECTURE.md)
 - [Verified results and limitations](docs/VALIDATION.md)
 - [Troubleshooting and rollback](docs/TROUBLESHOOTING.md)
-- [November 19 hardware recovery and radio validation](docs/RECOVERY-2026-11-19.md)
 - [Technical Reddit write-up](docs/REDDIT.md)
 - [DUO_DOCK_V10.3mf](hardware/DUO_DOCK_V10.3mf), the supplied dock model
 
