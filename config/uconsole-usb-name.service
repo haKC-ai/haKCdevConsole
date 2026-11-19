@@ -1,0 +1,16 @@
+[Unit]
+Description=Publish a stable name for the Android USB desktop link
+After=avahi-daemon.service
+Requires=avahi-daemon.service
+ConditionPathExists=/run/uconsole-usb-name.env
+[Service]
+Type=simple
+DynamicUser=yes
+EnvironmentFile=/run/uconsole-usb-name.env
+ExecStart=/usr/bin/avahi-publish-address --no-reverse uconsole-usb.local ${USB_IP}
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes

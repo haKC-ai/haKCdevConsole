@@ -1,3 +1,5 @@
+![haKCdevConsole hardware and dual-screen desktop](assets/hakcdevconsole.png)
+
 # haKCdevConsole
 
 A Surface Duo used as a wired, touch-controlled desktop display for a ClockworkPi uConsole. The uConsole runs Ubuntu; the Duo runs an Android RDP client. The keyboard and trackball remain physically attached to the uConsole.
@@ -12,6 +14,7 @@ This is a documented working prototype, not a universal device image or a one-cl
 - [How the monitor and input work](docs/ARCHITECTURE.md)
 - [Verified results and limitations](docs/VALIDATION.md)
 - [Troubleshooting and rollback](docs/TROUBLESHOOTING.md)
+- [November 19 hardware recovery and radio validation](docs/RECOVERY-2026-11-19.md)
 - [Technical Reddit write-up](docs/REDDIT.md)
 - [DUO_DOCK_V10.3mf](hardware/DUO_DOCK_V10.3mf), the supplied dock model
 
@@ -19,8 +22,9 @@ This is a documented working prototype, not a universal device image or a one-cl
 
 - One tall Android-sized desktop across the Duo's panels, with normal full-display maximize.
 - Optional Ctrl+Alt+1 / Ctrl+Alt+2 top/bottom half snapping and Ctrl+Alt+0 maximize.
-- Primary-monitor selection so Ubuntu's top bar appears on Android, plus a dock on both outputs.
+- Android as the only active display during RDP, with the built-in display restored on disconnect.
 - A 1x GNOME magnifier workaround for seeing the uConsole trackball cursor remotely.
+- A stable USB hostname that follows DHCP address changes.
 - An enrolled USB-interface firewall rule while other non-loopback RDP access stays blocked.
 
 ## Tested hardware and software

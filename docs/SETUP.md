@@ -22,7 +22,7 @@ Record the USB interface name and its IPv4 address as USB_IFACE and USB_IP. Do n
 Check installed packages and use your distribution's signed packages for missing components:
 
 ```sh
-sudo apt install gnome-remote-desktop python3-gi nftables
+sudo apt install gnome-remote-desktop python3-gi nftables avahi-utils avahi-daemon
 ```
 
 Ubuntu Tiling Assistant is optional but required for this repository's half-screen bindings. On Ubuntu the package is gnome-shell-extension-tiling-assistant. Validate extension compatibility with your GNOME version and confirm it is ACTIVE using gnome-extensions info tiling-assistant@ubuntu.com.
@@ -38,6 +38,8 @@ sudo python3 scripts/enroll-usb.py USB_IFACE
 sudo install -m644 config/uconsole-rdp-guard.nft /etc/uconsole-rdp-guard.nft
 sudo install -m755 scripts/90-uconsole-usb-rdp /etc/NetworkManager/dispatcher.d/90-uconsole-usb-rdp
 sudo install -m644 config/uconsole-rdp-guard.service /etc/systemd/system/uconsole-rdp-guard.service
+sudo install -m644 config/uconsole-usb-name.service /etc/systemd/system/uconsole-usb-name.service
+sudo systemctl enable --now avahi-daemon.service
 sudo systemctl daemon-reload
 sudo systemctl enable --now uconsole-rdp-guard.service
 sudo nft list table inet uconsole_remote
@@ -73,7 +75,7 @@ https://play.google.com/store/apps/details?id=com.microsoft.rdc.androidx
 
 Add a PC:
 
-- PC name: USB_IP:3390, replacing USB_IP with the uConsole USB address.
+- PC name: uconsole-usb.local:3390. If the Android client cannot resolve mDNS, use USB_IP:3390 with the current uConsole USB address.
 - Account: the desktop-sharing credentials configured above. Save them locally if desired.
 - Gateway: none.
 - Admin mode: off.
@@ -93,7 +95,7 @@ systemctl --user enable --now uconsole-remote-primary.service
 gsettings set org.gnome.shell.extensions.dash-to-dock multi-monitor true
 ```
 
-The watcher listens for Mutter monitor changes and marks the sole virtual remote monitor primary, preserving output positions/scales and the physical panel. It deliberately does nothing if multiple virtual remote monitors make the choice ambiguous. It does not create a second user session. GNOME should fall back to the physical panel when the virtual monitor disappears; test disconnect/reconnect on your build.
+The watcher listens for Mutter monitor changes. While one virtual remote monitor exists, it makes that monitor the only active display at origin 0,0. When it disappears, it restores the built-in panel. Current scale and mode are preserved where available. Multiple virtual monitors are left unchanged. This uses the existing login session. Both transitions were verified on the tested device.
 
 ## 7. Visible physical trackball cursor
 
@@ -142,4 +144,4 @@ The local address should be USB_IP:3390 and peer should be Android's USB address
 
 ## 10. Reconnect
 
-Reconnect the data cable, re-enable USB tethering if required, check the current USB IP, and open the saved PC connection. Update its address if DHCP changed. Verify primary display, pointer and snapping. The private-home-network viewer is a different path and is not needed for this USB setup.
+Reconnect the data cable, re-enable USB tethering if required, and open the saved uconsole-usb.local connection. The dispatcher republishes the enrolled USB address after DHCP changes and withdraws the name when no unique address exists. Android hostname resolution still needs verification on each client; use the current USB IP if resolution fails. Verify primary display, pointer and snapping. The private-home-network viewer is a different path and is not needed for this USB setup.
