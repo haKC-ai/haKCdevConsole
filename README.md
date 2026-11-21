@@ -11,6 +11,7 @@ This is a documented working prototype, not a universal device image or a one-cl
 ## Start here
 
 - [Setup instructions](docs/SETUP.md)
+- [Performance settings](config/PERFORMANCE.md)
 - [How the monitor and input work](docs/ARCHITECTURE.md)
 - [Verified results and limitations](docs/VALIDATION.md)
 - [Troubleshooting and rollback](docs/TROUBLESHOOTING.md)
@@ -30,7 +31,7 @@ This is a documented working prototype, not a universal device image or a one-cl
 
 ClockworkPi uConsole CM4, Ubuntu 26.04.1 ARM64, GNOME Wayland, GNOME Shell 50.1, GNOME Remote Desktop 50.2, Ubuntu Tiling Assistant 54, Surface Duo running a DUO-DE Treble Android build, Microsoft Windows App.
 
-Observed displays: physical 1280x720 at about 59.90Hz; virtual 1800x2700 at 2x scale. The virtual60Hz mode is not a measurement of streaming FPS. Other boards, Android builds and versions need their own validation.
+Observed displays: physical 1280x720 at about 59.90Hz; virtual 900x1352 at 1x scale with the performance configuration (originally 1800x2700 at 2x scale). The virtual60Hz mode is not a measurement of streaming FPS. Other boards, Android builds and versions need their own validation.
 
 ## Scope and privacy
 

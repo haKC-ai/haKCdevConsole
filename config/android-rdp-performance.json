@@ -1,0 +1,27 @@
+{
+  "format": "reference-settings-not-an-app-import",
+  "client": "Microsoft Windows App for Android",
+  "global_display": {
+    "use_hardware_acceleration_when_possible": true
+  },
+  "saved_pc_display": {
+    "customize_display_resolution": true,
+    "width": 1352,
+    "height": 900,
+    "scaling_percent": 100,
+    "orientation": "auto-adjust"
+  },
+  "android": {
+    "usb_tethering": true,
+    "screen_brightness_mode": 0
+  },
+  "expected_portrait_monitor": {
+    "width": 900,
+    "height": 1352,
+    "gnome_scale": 1.0
+  },
+  "optional_radio_display": {
+    "gqrx_fft_rate": 5,
+    "gps_command": "cgps -s localhost:2947"
+  }
+}
